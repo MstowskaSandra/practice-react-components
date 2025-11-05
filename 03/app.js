@@ -8,25 +8,68 @@ class Article extends React.Component {
         comments: [],
     }
     
+    renderCommentsList() {
+        const { comments } = this.state;
+        return comments.map((comm, i) => {
+            return (
+                <li key={i}>
+                    {comm}
+                </li>
+            );
+        });
+    }
+
+    submitHandler = e => {
+        e.preventDefault();
+
+        const { content } = this.state;
+        if(content) {
+            this.addComment(content);
+            this.setState({
+                content: '',
+            });
+        }
+    }
+
+    addComment(comm) {
+        this.setState(prevState => ({
+            comments: [...prevState.comments, comm],
+        }));
+    }
+
+    inputChange = e => {
+        const {name, value} = e.target;
+        this.setState({
+            [name]: value,
+        });
+    }
+
     render() {
         const {title, body} = this.props;
+        const { content } = this.state;
+
         return (
             <article>
                 <h1>{ title }</h1>
                 <p>{ body }</p>
-                <section>
-                    <form>
+
+                <section >
+                    <form onSubmit={ this.submitHandler }>
                         <div>
                             <label>
                                 <textarea 
                                     style={{ "minWidth": "300px", "minHeight": "120px" }} 
                                     name="content" 
+                                    value={content}
+                                    onChange={this.inputChange}
+                                    
                                 />
                             </label>
                         </div>
-                        <div><input type="submit" value="dodaj komentarz" /></div>
+                        <div><input type="submit" value="dodaj komentarz" onChange={ this.inputChange }/></div>
                     </form>
                     <ul>
+                        { this.renderCommentsList() }
                         {/* tutaj komentarze jako <li/>, ps. tak wygląda komentarz do kodu w JSX */}
                     </ul>
                 </section>

@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import API_KEY from '../config';
+import { fetchData } from "./components/fetchData";
 
 const root = createRoot(document.querySelector('#root'));
 
@@ -12,9 +12,8 @@ class App extends React.Component {
     componentDidMount() {
         const { lat, lon } = this.props;
 
-        fetch(`https://api.weatherbit.io/v2.0/current?key=${API_KEY}&lang=pl&lat=${lat}&lon=${lon}`)
-            .then(response => response.json())
-            .then(data => this.setState({ data: data.data }))
+        fetchData(lat, lon)
+            .then(data => this.setState({ data }))
             .catch(err => console.error(err));
     }
 

@@ -22,12 +22,13 @@ class App extends React.Component {
         console.log(data);
 
         if(data) {
+            const { city_name, ob_time, weather, clouds, temp, sunrise, sunset} = data[0];
             return (
                 <div>
-                    <h1>Pogoda dla: {data[0].city_name} dnia {data[0].ob_time}</h1>
-                    <p>{data[0].weather.description} ({data[0].clouds}%) tem: {data[0].temp}C </p>
-                    <p>Wschód słońca o godzinie: {data[0].sunrise}</p>
-                    <p>Zachód słońca o godzinie: {data[0].sunset}</p>
+                    <h1>Pogoda dla: {city_name} dnia {ob_time}</h1>
+                    <p>{weather.description} ({clouds}%) tem: {temp}C </p>
+                    <p>Wschód słońca o godzinie: {sunrise}</p>
+                    <p>Zachód słońca o godzinie: {sunset}</p>
                 </div>
             );
         }

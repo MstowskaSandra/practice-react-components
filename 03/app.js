@@ -24,18 +24,14 @@ class Article extends React.Component {
 
         const { content } = this.state;
         if(content) {
-            this.addComment(content);
-            this.setState({
+            this.setState(prevState => ({
                 content: '',
-            });
+                comments: [...prevState.comments, content]
+            }));
+        } else {
+            alert('Wprowadź dane zanim wyślesz.');
         }
-    }
-
-    addComment(comm) {
-        this.setState(prevState => ({
-            comments: [...prevState.comments, comm],
-        }));
-    }
+    };
 
     inputChange = e => {
         const {name, value} = e.target;
